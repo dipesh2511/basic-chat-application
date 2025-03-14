@@ -1,4 +1,3 @@
-import { name } from "ejs";
 import { Schema } from "mongoose";
 export const UserSchema = new Schema({
   name: {

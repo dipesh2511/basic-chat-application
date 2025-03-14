@@ -9,6 +9,8 @@ export default class UserModel {
     this.otp = null;
     this.otp_expiry = null;
     this.is_verified = false;
+    this.group_text = [];
+    this.private_text = [];
     this.created_at = new Date();
     this.updated_at = new Date();
   }

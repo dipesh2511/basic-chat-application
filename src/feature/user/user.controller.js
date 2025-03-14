@@ -7,8 +7,8 @@ export default class UserController {
 
   async create(req, res, next) {
     let { name, email, password } = req.body;
-    let bcrypt_password = UserModel.bcryptPassword(password);
-    let new_user = UserModel.create(name, email, bcrypt_password);
+    // let bcrypt_password = UserModel.bcryptPassword(password);
+    let new_user = UserModel.create(name, email, password);
     try {
       let result = await this.UserRepository.create(new_user);
       if (result.status_code === 201) {
