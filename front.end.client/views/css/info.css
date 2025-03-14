@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ece5dd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    position: relative; /* For positioning the download button */
+  }
+  
+  /* Download Button */
+  .download-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .btn-download {
+    background-color: #25d366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-download:hover {
+    background-color: #1ebe57;
+  }
+  
+  .btn-download i {
+    font-size: 18px;
+  }
+  
+  /* Login Container */
+  .login-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .logo i {
+    font-size: 48px;
+    color: #25d366;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: #25d366;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  h3 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .help-instructions ul {
+    text-align: left;
+    padding-left: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .help-instructions li {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .help-instructions li strong {
+    color: #25d366;
+  }
+  
+  .register-link {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .register-link a {
+    color: #25d366;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .login-container {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    h2 {
+      font-size: 24px;
+    }
+  
+    h3 {
+      font-size: 18px;
+    }
+  
+    .help-instructions li {
+      font-size: 12px;
+    }
+  
+    .register-link {
+      font-size: 14px;
+    }
+  
+    .btn-download {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }

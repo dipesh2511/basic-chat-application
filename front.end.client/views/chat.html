@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Let's Connect Chat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./css/chat.css" />
+</head>
+
+<body>
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Chat List -->
+    <div class="chat-list" id="chat-list">
+      <div class="chat-header">
+        <h2>Chats</h2>
+        <div class="dropdown">
+          <button class="dropdown-btn">
+            <i class="fas fa-users"></i> Friends
+          </button>
+          <div class="dropdown-content">
+            <a href="#" onclick="openChat('Alice')">Alice</a>
+            <a href="#" onclick="openChat('Bob')">Bob</a>
+            <a href="#" onclick="openChat('Charlie')">Charlie</a>
+            <div class="divider"></div>
+            <a href="#" onclick="createGroupChat()">
+              <i class="fas fa-plus"></i> Create Group Chat
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="chat-item" onclick="openChat('Alice')">
+        <div class="chat-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">Alice</div>
+          <div class="chat-preview">Hey! How's it going?</div>
+        </div>
+      </div>
+      <div class="chat-item" onclick="openChat('Bob')">
+        <div class="chat-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">Bob</div>
+          <div class="chat-preview">Just finished my work. 🎉</div>
+        </div>
+      </div>
+      <div class="chat-item" onclick="openChat('Charlie')">
+        <div class="chat-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">Charlie</div>
+          <div class="chat-preview">Let's catch up soon!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat-section" id="chat-section">
+      <div class="chat-header">
+        <div class="back-btn" id="back-btn">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="chat-title" id="chat-title">Chat</div>
+        <div class="chat-options">
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <!-- Dummy Messages -->
+        <div class="message" data-id="1">
+          <div class="sender">Alice</div>
+          <div class="text">Hey! How's it going?</div>
+          <div class="timestamp">10:00 AM</div>
+          <div class="message-options">
+            <i class="fas fa-edit" onclick="editMessage(1)"></i>
+            <i class="fas fa-trash" onclick="deleteMessage(1)"></i>
+          </div>
+        </div>
+        <div class="message sent" data-id="2">
+          <div class="sender">You</div>
+          <div class="text">Hi Alice! All good here. 😊</div>
+          <div class="timestamp">10:01 AM</div>
+          <div class="message-options">
+            <i class="fas fa-edit" onclick="editMessage(2)"></i>
+            <i class="fas fa-trash" onclick="deleteMessage(2)"></i>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chat-input" placeholder="Type a message..." />
+        <button id="send-btn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/chat.js"></script>
+</body>
+
+</html>
