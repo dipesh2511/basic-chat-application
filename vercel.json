@@ -1,0 +1,39 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",               # Backend entry point
+        "use": "@vercel/node"             # Use Node.js for the backend
+      },
+      {
+        "src": "front.end/client/view/**/*.html", 
+        "use": "@vercel/static"          
+      },
+      {
+        "src": "front.end/client/view/js/**/*.js", 
+        "use": "@vercel/static"
+      },
+      {
+        "src": "front.end/client/view/css/**/*.css", 
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",              
+        "dest": "server.js"
+      },
+      {
+        "src": "/js/(.*)",           
+        "dest": "front.end/client/view/js/$1"
+      },
+      {
+        "src": "/css/(.*)",          
+        "dest": "front.end/client/view/css/$1"
+      },
+      {
+        "src": "/(.*)",                 
+        "dest": "front.end/client/view/$1.html"
+      }
+    ]
+  }
