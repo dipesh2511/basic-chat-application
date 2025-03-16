@@ -1,4 +1,5 @@
 export const config_variables ={
+    BASE_URL: 'http://localhost:3000',
     API_URL: 'http://localhost:3000/api',
     INFO_URL: 'http://localhost:3000/info.html',  
     LOGIN_URL: 'http://localhost:3000/index.html',
@@ -14,4 +15,5 @@ export const config_variables ={
     USER_VERIFY_OTP: 'http://localhost:3000/api/user/verify-otp',
     USER_LOGIN: 'http://localhost:3000/api/user/login',
     USER_REGISTER: 'http://localhost:3000/api/user',
+    CREATE_CHAT_URI: 'http://localhost:3000/api/chat',
 }

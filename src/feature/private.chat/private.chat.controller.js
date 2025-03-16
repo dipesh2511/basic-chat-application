@@ -10,7 +10,6 @@ export default class PrivateChatController {
     let new_chat = PrivateChatModel.create(sender, receiver, message);
     try {
       let result = await this.privateChatRepository.create(new_chat);
-      console.log(result);
       if (result.status_code === 201) {
         return res.status(200).send(result);
       }

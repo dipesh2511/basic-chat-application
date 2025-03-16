@@ -1,3 +1,4 @@
+import ApplicationLevelError from "../../custom.error.logs.reponses/application.level.error.js";
 import UserModel from "./user.model.js";
 import UserRepository from "./user.repository.js";
 export default class UserController {
@@ -19,11 +20,37 @@ export default class UserController {
     }
   }
 
-  async read(req, res, next) {}
-
   async list(req, res, next) {}
 
-  async update(req, res, next) {}
+  async read(req, res, next) {
+    try {
+      let id = req.params;
+      let result = await this.UserRepository.read(id);
+      res.send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async update(req, res, next) {
+    try {
+      let { id } = req.params;
+      let updateUserBody = req.body;
+      if (!typeof updateUserBody.friends == "object") {
+        throw new ApplicationLevelError(
+          "Friends show be provided as a array",
+          404,
+          "Friends should be a array",
+          "Bad Request"
+        );
+      }
+      updateUserBody.friends = updateUserBody.friends.map((key) => key.trim());
+      let result = await this.UserRepository.update(id, updateUserBody);
+      res.send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async delete(req, res, next) {}
 

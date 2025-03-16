@@ -11,6 +11,7 @@ export default class UserModel {
     this.is_verified = false;
     this.group_text = [];
     this.private_text = [];
+    this.friends = [];
     this.created_at = new Date();
     this.updated_at = new Date();
   }

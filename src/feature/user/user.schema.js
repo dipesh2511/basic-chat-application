@@ -45,4 +45,10 @@ export const UserSchema = new Schema({
       ref: "private_chats",
     },
   ],
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+  ],
 });
