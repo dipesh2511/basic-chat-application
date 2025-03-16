@@ -33,7 +33,8 @@ login.addEventListener("click", async () => {
     sessionStorage.setItem("user_payload", JSON.stringify(result));
     let str = sessionStorage.getItem('user_payload')
     console.log(JSON.parse(str))
-    window.location.href = config_variables.CHAT_URL;
+    // window.location.href = config_variables.CHAT_URL;
+    window.location.href = 'chat.html';
   } else {
     window.location.href = config_variables.INFO_URL;
   }
