@@ -12,6 +12,53 @@
 </head>
 
 <body>
+  <!-- modal for the view profile -->
+<div id="profile-modal" class="profile-modal">
+  <div class="profile-modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="profile-header">
+      <div class="profile-photo">
+        <img src="/default.jpg" alt="Profile Photo" id="profile-photo-img" />
+      </div>
+      <h2 id="profile-name">John Doe</h2>
+      <p id="profile-email">john.doe@example.com</p>
+    </div>
+    <div class="profile-details">
+      <div class="detail-item">
+        <label>Phone:</label>
+        <span id="profile-phone">+91-9993683129</span>
+      </div>
+      <div class="detail-item">
+        <label>Location:</label>
+        <span id="profile-location">Delhi, India</span>
+      </div>
+      <div class="detail-item">
+        <label>Status:</label>
+        <span id="profile-status">Active</span>
+      </div>
+    </div>
+    <div class="profile-actions">
+      <button id="edit-profile">Edit Profile</button>
+      <button id="change-photo">Change Photo</button>
+      <!-- Add a hidden file input for selecting a photo -->
+      <input type="file" id="select-photo" accept="image/*" style="display: none;" />
+    </div>
+  </div>
+</div>
+  <!-- modal for friend request -->
+  <div id="add-friends-modal" class="add-friends-modal">
+    <div class="add-friends-modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Add Friends</h2>
+      <div class="search-bar">
+        <input type="text" id="search-users" placeholder="Search users..." />
+        <button id="search-button"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="users-list" id="users-list">
+        <!-- Users will be dynamically added here -->
+      </div>
+    </div>
+  </div>
   <!-- Main Container -->
   <div class="main-container">
     <!-- Chat List -->
@@ -19,49 +66,26 @@
       <div class="chat-header">
         <h2>Chats</h2>
         <div class="dropdown">
-          <button class="dropdown-btn">
-            <i class="fas fa-users"></i> Friends
+          <button class="dropdown-btn" id="friends-dropdown">
+            <i class="fas fa-users"></i> Friends </button>
+          <div class="dropdown-content" id="friends-dropdown-content">
+            <!-- Friends will be dynamically added here -->
+          </div>
+        </div>
+        <!-- Add Profile Dropdown -->
+        <div class="dropdown">
+          <button class="dropdown-btn" id="profile-dropdown">
+            <i class="fas fa-user-circle"></i> <span id="logged-in-user-name"></span>
           </button>
-          <div class="dropdown-content">
-            <a href="#" onclick="openChat('Alice')">Alice</a>
-            <a href="#" onclick="openChat('Bob')">Bob</a>
-            <a href="#" onclick="openChat('Charlie')">Charlie</a>
-            <div class="divider"></div>
-            <a href="#" onclick="createGroupChat()">
-              <i class="fas fa-plus"></i> Create Group Chat
-            </a>
+          <div class="dropdown-content" id="profile-dropdown-content">
+            <a href="#" id="view-profile">View Profile</a>
+            <a href="#" id="add-friends">Add Friends</a>
+            <a href="#" id="logout">Logout</a>
           </div>
         </div>
       </div>
-      <div class="chat-item" onclick="openChat('Alice')">
-        <div class="chat-icon">
-          <i class="fas fa-user"></i>
-        </div>
-        <div class="chat-info">
-          <div class="chat-name">Alice</div>
-          <div class="chat-preview">Hey! How's it going?</div>
-        </div>
-      </div>
-      <div class="chat-item" onclick="openChat('Bob')">
-        <div class="chat-icon">
-          <i class="fas fa-user"></i>
-        </div>
-        <div class="chat-info">
-          <div class="chat-name">Bob</div>
-          <div class="chat-preview">Just finished my work. 🎉</div>
-        </div>
-      </div>
-      <div class="chat-item" onclick="openChat('Charlie')">
-        <div class="chat-icon">
-          <i class="fas fa-user"></i>
-        </div>
-        <div class="chat-info">
-          <div class="chat-name">Charlie</div>
-          <div class="chat-preview">Let's catch up soon!</div>
-        </div>
-      </div>
+      <!-- Chat items will be dynamically added here -->
     </div>
-
     <!-- Chat Section -->
     <div class="chat-section" id="chat-section">
       <div class="chat-header">
@@ -74,25 +98,7 @@
         </div>
       </div>
       <div class="chat-messages" id="chat-messages">
-        <!-- Dummy Messages -->
-        <div class="message" data-id="1">
-          <div class="sender">Alice</div>
-          <div class="text">Hey! How's it going?</div>
-          <div class="timestamp">10:00 AM</div>
-          <div class="message-options">
-            <i class="fas fa-edit" onclick="editMessage(1)"></i>
-            <i class="fas fa-trash" onclick="deleteMessage(1)"></i>
-          </div>
-        </div>
-        <div class="message sent" data-id="2">
-          <div class="sender">You</div>
-          <div class="text">Hi Alice! All good here. 😊</div>
-          <div class="timestamp">10:01 AM</div>
-          <div class="message-options">
-            <i class="fas fa-edit" onclick="editMessage(2)"></i>
-            <i class="fas fa-trash" onclick="deleteMessage(2)"></i>
-          </div>
-        </div>
+        <!-- Messages will be dynamically added here -->
       </div>
       <div class="chat-input">
         <input type="text" id="chat-input" placeholder="Type a message..." />
@@ -102,7 +108,6 @@
       </div>
     </div>
   </div>
-
   <script type="module" src="./js/chat.js"></script>
 </body>
 

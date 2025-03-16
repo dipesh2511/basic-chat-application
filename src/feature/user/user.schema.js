@@ -1,4 +1,3 @@
-import { name } from "ejs";
 import { Schema } from "mongoose";
 export const UserSchema = new Schema({
   name: {
@@ -26,6 +25,9 @@ export const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  profile_photo: {
+    type: String,
+  },
   created_at: {
     type: Date,
     default: Date.now,
@@ -44,6 +46,12 @@ export const UserSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "private_chats",
+    },
+  ],
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "users",
     },
   ],
 });
