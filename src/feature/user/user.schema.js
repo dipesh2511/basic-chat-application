@@ -25,6 +25,9 @@ export const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  profile_photo: {
+    type: String,
+  },
   created_at: {
     type: Date,
     default: Date.now,

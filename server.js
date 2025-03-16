@@ -22,6 +22,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join("front.end.client", "views")));
+app.use(express.static(path.join("profile.pictures")));
+app.use(express.static(path.join("default.files")));
 app.use(cors(corsOptions));
 
 // creating socket Server

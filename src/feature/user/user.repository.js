@@ -38,7 +38,27 @@ export default class UserRepository {
     }
   }
 
-  async list() {}
+  async list(payload) {
+    try {
+      let logged_in_user = await this.UserModel.findOne({
+        _id: new ObjectId(payload.user_id),
+      });
+      let user_and_its_friends = [logged_in_user._id];
+      logged_in_user.friends.forEach((friend) => {
+        user_and_its_friends.push(friend);
+      });
+      let user_and_not_friends = await this.UserModel.find({_id:{$nin : user_and_its_friends}});
+
+      return new ApplicationLevelResponse("All User in db fetched", 200, user_and_not_friends);
+    } catch (error) {
+      throw new ApplicationLevelError(
+        error,
+        500,
+        error.message,
+        "Data Base Error"
+      );
+    }
+  }
 
   async read(id) {
     try {
@@ -83,11 +103,25 @@ export default class UserRepository {
       }
 
       if (updateUserBody.friends) {
-        updateUserBody.friends.forEach((friend) => {
-          if (!user.friends.includes(friend)) {
-            user.friends.push(friend);
-          }
+        let friend_user = await this.UserModel.findOne({
+          _id: new ObjectId(updateUserBody.friends),
         });
+        if (!friend_user) {
+          throw new ApplicationLevelError(
+            error.message,
+            404,
+            "Friend request to send User Not Found",
+            "Bad Request"
+          );
+        }
+
+        if (!user.friends.includes(updateUserBody.friends)) {
+          user.friends.push(updateUserBody.friends);
+        }
+        if (!friend_user.friends.includes(id)) {
+          friend_user.friends.push(id);
+          await friend_user.save();
+        }
       }
 
       Object.keys(updateUserBody).forEach((key) => {
@@ -104,6 +138,7 @@ export default class UserRepository {
         result
       );
     } catch (error) {
+      console.log(error);
       throw new ApplicationLevelError(
         error.message || error,
         error.status_code || 500,

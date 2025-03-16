@@ -4,6 +4,9 @@ let email_box = document.getElementById("email");
 let password_box = document.getElementById("password");
 let login = document.getElementById("login-btn");
 
+if(JSON.parse(sessionStorage.getItem('user_payload'))){
+  window.location.href = config_variables.CHAT_URL;
+}
 login.addEventListener("click", async () => {
   console.log("login clicked");
   let email = email_box.value;

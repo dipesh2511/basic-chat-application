@@ -71,10 +71,106 @@ let renderChat = async () => {
     }
   };
 
+  // function to get the users which are not friend of the logged in user
+  const notFriendUsers = async () => {
+    try {
+      let user_payload = sessionStorage.getItem("user_payload");
+
+      user_payload = JSON.parse(user_payload);
+      const response = await fetch(config_variables.USER_LIST, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: user_payload.access,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch users: ${response.status} ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log(data);
+      return data.data || [];
+    } catch (error) {
+      console.error("Error fetching non-friend users:", error.message);
+      return [];
+    }
+  };
+
+  // function to send request to the user which is not friend of the user
+  const sendFriendRequest = async (friendToBe_id) => {
+    try {
+      let user_payload = sessionStorage.getItem("user_payload");
+
+      user_payload = JSON.parse(user_payload);
+
+      const response = await fetch(
+        `${config_variables.USER_LIST}/${userData.data._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: user_payload.access,
+          },
+          body: JSON.stringify({ friends: friendToBe_id }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to send friend request: ${response.status} ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log("Friend request sent:", data);
+      return data || {};
+    } catch (error) {
+      console.error("Error sending friend request:", error.message);
+      return { error: error.message };
+    }
+  };
+
+  // function to update user profile photo
+  const uploadProfilePhoto = async (formData) => {
+    try {
+      const user_payload = JSON.parse(sessionStorage.getItem("user_payload"));
+      const response = await fetch(
+        `${config_variables.USER_READ}/${userData.data._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: user_payload.access,
+          },
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to upload profile photo");
+      }
+
+      const data = await response.json();
+      console.log("Profile photo updated:", data);
+      alert("Profile photo updated successfully!");
+    } catch (error) {
+      console.error("Error uploading profile photo:", error);
+      alert("Failed to upload profile photo. Please try again.");
+    }
+  };
+
   // Get user data
   let userData = await fetchUserData(
     JSON.parse(sessionStorage.getItem("user_payload"))
   );
+  //  console.log(userData)
+
+  // setting the name header
+  let logged_in_user_name = document.getElementById("logged-in-user-name");
+  logged_in_user_name.innerText = userData.data.name;
 
   // Get previous chat data
   let previousChatData = await fetchUserFriendsPreviousChatData(
@@ -241,7 +337,7 @@ let renderChat = async () => {
         const notificationBadge = chatItem.querySelector(".notification-badge");
 
         // Update the chat preview with the latest message
-        
+
         // Show the notification badge only if the current user is the recipient
         if (message_response.data.receiver === userData.data._id) {
           chatPreview.textContent = message_response.data.message;
@@ -294,6 +390,7 @@ let renderChat = async () => {
 
     friends.forEach((friend) => {
       // Add friend to dropdown
+      
       const dropdownItem = document.createElement("a");
       dropdownItem.href = "#";
       dropdownItem.textContent = friend.name;
@@ -322,21 +419,37 @@ let renderChat = async () => {
       const latestMessage = chatHistory
         ? chatHistory.data[chatHistory.data.length - 1]
         : null;
-
-      chatItem.innerHTML = `
-      <div class="chat-icon">
-        <i class="fas fa-user"></i>
-      </div>
-      <div class="chat-info">
-        <div class="chat-name">${friend.name}</div>
-        <div class="chat-preview">${
-          latestMessage ? latestMessage.message : "No messages yet"
-        }</div>
-        <div class="notification-badge" id="notification-${
-          friend._id
-        }" style="display: none;">1</div>
-      </div>
-    `;
+      if(friend.profile_photo == null){
+        chatItem.innerHTML = `
+        <div class="chat-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">${friend.name}</div>
+          <div class="chat-preview">${
+            latestMessage ? latestMessage.message : "No messages yet"
+          }</div>
+          <div class="notification-badge" id="notification-${
+            friend._id
+          }" style="display: none;">1</div>
+        </div>
+      `;
+      }else{
+        chatItem.innerHTML = `
+        <div class="chat-icon">
+            <img src="${friend.profile_photo}" alt="${friend.name}" class="chat-icon-img">
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">${friend.name}</div>
+          <div class="chat-preview">${
+            latestMessage ? latestMessage.message : "No messages yet"
+          }</div>
+          <div class="notification-badge" id="notification-${
+            friend._id
+          }" style="display: none;">1</div>
+        </div>
+      `;
+      }
       chatList.appendChild(chatItem);
     });
   }
@@ -387,6 +500,204 @@ let renderChat = async () => {
         deleteMessage(id);
       }
     });
+  // Event listener for View Profile
+  document
+    .getElementById("view-profile")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      alert("View Profile clicked");
+      // Add your logic to view the profile
+    });
+
+  // Event listener for Add Friends
+  document
+    .getElementById("add-friends")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      alert("Add Friends clicked");
+      // Add your logic to add friends
+    });
+
+  // Event listener for Logout
+  document.getElementById("logout").addEventListener("click", function (event) {
+    event.preventDefault();
+    if (confirm("Are you sure you want to logout?")) {
+      sessionStorage.removeItem("user_payload");
+      window.location.href = config_variables.LOGIN_URL;
+    }
+  });
+
+  // Toggle profile dropdown
+  document
+    .getElementById("profile-dropdown")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const dropdownContent = document.getElementById(
+        "profile-dropdown-content"
+      );
+      dropdownContent.style.display =
+        dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", function (event) {
+    const profileDropdown = document.getElementById("profile-dropdown");
+    const profileDropdownContent = document.getElementById(
+      "profile-dropdown-content"
+    );
+    if (
+      !profileDropdown.contains(event.target) &&
+      !profileDropdownContent.contains(event.target)
+    ) {
+      profileDropdownContent.style.display = "none";
+    }
+  });
+
+  // Add this to your existing JavaScript code
+
+  // Open Profile Modal
+  document
+    .getElementById("view-profile")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const profileModal = document.getElementById("profile-modal");
+      profileModal.style.display = "flex";
+
+      // Populate profile details
+      document.getElementById("profile-name").textContent = userData.data.name;
+      document.getElementById("profile-email").textContent =
+        userData.data.email;
+      if (userData.data.profile_photo) {
+        document.getElementById("profile-photo-img").src =
+          userData.data.profile_photo;
+      }
+    });
+
+  // Close Profile Modal
+  document.querySelector(".close-modal").addEventListener("click", function () {
+    const profileModal = document.getElementById("profile-modal");
+    profileModal.style.display = "none";
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener("click", function (event) {
+    const profileModal = document.getElementById("profile-modal");
+    if (event.target === profileModal) {
+      profileModal.style.display = "none";
+    }
+  });
+
+  // Edit Profile Button
+  document
+    .getElementById("edit-profile")
+    .addEventListener("click", function () {
+      alert("Edit Profile clicked");
+      // Add your logic to edit the profile
+    });
+
+  // Change Photo Button
+  document
+    .getElementById("change-photo")
+    .addEventListener("click", function () {
+      // Trigger the hidden file input when "Change Photo" is clicked
+      document.getElementById("select-photo").click();
+    });
+
+  // Handle file selection
+  document
+    .getElementById("select-photo")
+    .addEventListener("change", function (event) {
+      const file = event.target.files[0]; // Get the selected file
+      if (file) {
+        const reader = new FileReader(); // Create a FileReader to read the file
+
+        reader.onload = function (e) {
+          // Update the profile photo with the selected image
+          const profilePhotoImg = document.getElementById("profile-photo-img");
+          profilePhotoImg.src = e.target.result;
+          const formData = new FormData();
+          formData.append("profile_photo", file);
+          // Optionally, upload the photo to the server
+          uploadProfilePhoto(formData);
+        };
+
+        reader.readAsDataURL(file); // Read the file as a data URL
+      }
+    });
+
+  // Open Add Friends Modal
+  document
+    .getElementById("add-friends")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const addFriendsModal = document.getElementById("add-friends-modal");
+      addFriendsModal.style.display = "flex";
+
+      // Fetch all users (replace with actual API call)
+      fetchAllUsers();
+    });
+
+  // Close Add Friends Modal
+  document
+    .querySelector("#add-friends-modal .close-modal")
+    .addEventListener("click", function () {
+      const addFriendsModal = document.getElementById("add-friends-modal");
+      addFriendsModal.style.display = "none";
+    });
+
+  // Close modal when clicking outside
+  window.addEventListener("click", function (event) {
+    const addFriendsModal = document.getElementById("add-friends-modal");
+    if (event.target === addFriendsModal) {
+      addFriendsModal.style.display = "none";
+    }
+  });
+
+  // Fetch all users from the database
+  async function fetchAllUsers() {
+    const users = await notFriendUsers();
+
+    const usersList = document.getElementById("users-list");
+    usersList.innerHTML = "";
+
+    users.forEach((user) => {
+      const userItem = document.createElement("div");
+      userItem.classList.add("user-item");
+
+      if (user.profile_photo) {
+        userItem.innerHTML = `
+        <div class="user-info">
+          <img src="${user.profile_photo}" alt="${user.name}" class="user-photo" />
+          <span class="user-name">${user.name}</span>
+        </div>
+        <button class="send-request-btn" data-id="${user._id}">Send Request</button>
+      `;
+      } else {
+        userItem.innerHTML = `
+        <div class="user-info">
+          <img src="/default.jpg" alt="${user.name}" class="user-photo" />
+          <span class="user-name">${user.name}</span>
+        </div>
+        <button class="send-request-btn" data-id="${user._id}">Send Request</button>
+      `;
+      }
+      usersList.appendChild(userItem);
+    });
+
+    // Add event listeners to "Send Request" buttons
+    document.querySelectorAll(".send-request-btn").forEach(async (button) => {
+      button.addEventListener("click", function () {
+        const userId = this.getAttribute("data-id");
+        console.log(`Friend request sent to user `);
+        alert(`Friend request sent to user`);
+        sendFriendRequest(userId);
+        this.textContent = "Request Sent";
+        this.classList.add("sent");
+        this.disabled = true;
+        window.location.href = config_variables.CHAT_URL;
+      });
+    });
+  }
 
   // Render friends on page load
   renderFriends(userData.data.friends);
