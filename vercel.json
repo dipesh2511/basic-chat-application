@@ -2,38 +2,38 @@
     "version": 2,
     "builds": [
       {
-        "src": "server.js",               # Backend entry point
-        "use": "@vercel/node"             # Use Node.js for the backend
+        "src": "server.js",               // Backend entry point
+        "use": "@vercel/node"            // Use Node.js for the backend
       },
       {
-        "src": "front.end/client/view/**/*.html", 
-        "use": "@vercel/static"          
+        "src": "front.end.client/view/**/*.html",  // Serve HTML files
+        "use": "@vercel/static"          // Use static file handling for HTML
       },
       {
-        "src": "front.end/client/view/js/**/*.js", 
+        "src": "front.end.client/view/js/**/*.js",  // Serve JavaScript files
         "use": "@vercel/static"
       },
       {
-        "src": "front.end/client/view/css/**/*.css", 
+        "src": "front.end.client/view/css/**/*.css",  // Serve CSS files
         "use": "@vercel/static"
       }
     ],
     "routes": [
       {
-        "src": "/api/(.*)",              
+        "src": "/api/(.*)",               // Route API requests to the backend
         "dest": "server.js"
       },
       {
-        "src": "/js/(.*)",           
-        "dest": "front.end/client/view/js/$1"
+        "src": "/js/(.*)",                // Serve JS files
+        "dest": "front.end.client/view/js/$1"
       },
       {
-        "src": "/css/(.*)",          
-        "dest": "front.end/client/view/css/$1"
+        "src": "/css/(.*)",               // Serve CSS files
+        "dest": "front.end.client/view/css/$1"
       },
       {
-        "src": "/(.*)",                 
-        "dest": "front.end/client/view/$1.html"
+        "src": "/(.*)",                   // Route all other requests to HTML files
+        "dest": "front.end.client/view/$1.html"
       }
     ]
   }
