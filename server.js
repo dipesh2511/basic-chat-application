@@ -12,6 +12,8 @@ import { Server } from "socket.io";
 
 import userRouter from "./src/feature/user/user.router.js";
 import privateChatRouter from "./src/feature/private.chat/private.chat.router.js";
+import pageRenderRouter from "./src/feature/page.render/page.render.router.js";
+
 import ApplicationLevelError from "./src/custom.error.logs.reponses/application.level.error.js";
 import { config_variables } from "./front.end.client/views/js/config.js";
 
@@ -31,22 +33,31 @@ const io = new Server(server, {
   cors: corsOptions,
 });
 
-// Server-side code
 io.on("connection", (socket) => {
   console.log("socket connection established");
 
   // Saving new message in the database
   socket.on("new_message", async (message_obj) => {
     try {
-      let new_message_call = await fetch(config_variables.CREATE_CHAT_URI, {
+      const serverUrl = process.env.SERVER_URL || "http://localhost:3000";
+      const new_message_call = await fetch(`${serverUrl}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(message_obj),
       });
-      let new_message = await new_message_call.json();
-
+  
+      // Check if the response is JSON
+      const contentType = new_message_call.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const responseText = await new_message_call.text();
+        throw new Error(`Unexpected response: ${responseText}`);
+      }
+  
+      // Parse the response as JSON
+      const new_message = await new_message_call.json();
+  
       // Broadcast the new message to all connected clients
       io.emit("add_message", new_message);
       console.log("Message broadcasted:", new_message); // Debugging
@@ -59,8 +70,8 @@ io.on("connection", (socket) => {
     console.log("connection is disconnected");
   });
 });
-
 // router endpoints here
+app.use("/", pageRenderRouter);
 app.use("/api/user", userRouter);
 app.use("/api/chat", privateChatRouter);
 
