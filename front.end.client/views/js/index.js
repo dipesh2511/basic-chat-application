@@ -4,7 +4,7 @@ let email_box = document.getElementById("email");
 let password_box = document.getElementById("password");
 let login = document.getElementById("login-btn");
 
-if(JSON.parse(sessionStorage.getItem('user_payload'))){
+if (JSON.parse(sessionStorage.getItem("user_payload"))) {
   window.location.href = config_variables.CHAT_URL;
 }
 login.addEventListener("click", async () => {
@@ -31,11 +31,9 @@ login.addEventListener("click", async () => {
   console.log(result, "this is result");
   if (result.status_code == 200) {
     sessionStorage.setItem("user_payload", JSON.stringify(result));
-    let str = sessionStorage.getItem('user_payload')
-    console.log(JSON.parse(str))
-    // window.location.href = config_variables.CHAT_URL;
-    window.location.href = 'chat.html';
+    let str = sessionStorage.getItem("user_payload");
+    window.location.href = "/chat";
   } else {
-    window.location.href = config_variables.INFO_URL;
+    window.location.href = "/info";
   }
 });

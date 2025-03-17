@@ -43,7 +43,7 @@ register.addEventListener("click", async (event) => {
     // Handle the response
     if (result.message === "User created successfully") {
       alert("User created successfully. Go to the login page.");
-      window.location.href = config_variables.LOGIN_URL;
+      window.location.href = '/';
     } else if (result.error_type === "Mongoose duplicate key error") {
       alert("User already exists.");
     } else {

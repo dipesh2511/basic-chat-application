@@ -12,6 +12,8 @@ import { Server } from "socket.io";
 
 import userRouter from "./src/feature/user/user.router.js";
 import privateChatRouter from "./src/feature/private.chat/private.chat.router.js";
+import  pageRenderRouter from './src/feature/page.render/page.render.router.js'
+
 import ApplicationLevelError from "./src/custom.error.logs.reponses/application.level.error.js";
 import { config_variables } from "./front.end.client/views/js/config.js";
 
@@ -61,6 +63,7 @@ io.on("connection", (socket) => {
 });
 
 // router endpoints here
+app.use("/",pageRenderRouter);
 app.use("/api/user", userRouter);
 app.use("/api/chat", privateChatRouter);
 

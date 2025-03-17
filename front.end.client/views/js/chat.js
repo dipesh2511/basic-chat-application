@@ -3,7 +3,7 @@ import { io } from "https://cdn.socket.io/4.7.2/socket.io.esm.min.js";
 
 let current_chat_id = null; // To store the current chat's friend ID
 let chatTitle = null; // Define chatTitle globally
-const socket = io.connect(config_variables.BASE_URL);
+const socket = io.connect(window.location.origin);
 
 // Request notification permission
 if (Notification.permission !== "granted") {
@@ -15,7 +15,7 @@ if (Notification.permission !== "granted") {
 }
 
 if (!sessionStorage.getItem("user_payload")) {
-  window.location.href = config_variables.LOGIN_URL;
+  window.location.href = '/';
 }
 
 let renderChat = async () => {
@@ -523,7 +523,7 @@ let renderChat = async () => {
     event.preventDefault();
     if (confirm("Are you sure you want to logout?")) {
       sessionStorage.removeItem("user_payload");
-      window.location.href = config_variables.LOGIN_URL;
+      window.location.href = '/';
     }
   });
 
