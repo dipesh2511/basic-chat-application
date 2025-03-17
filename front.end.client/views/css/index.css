@@ -1,3 +1,4 @@
+/* General Styles */
 body {
 	font-family: Arial, sans-serif;
 	background-color: #ece5dd;
@@ -7,16 +8,16 @@ body {
 	height: 100vh;
 	margin: 0;
 	position: relative; /* For positioning the download button */
-  }
-  
-  /* Download Button */
-  .download-button {
+}
+
+/* Download Button */
+.download-button {
 	position: absolute;
 	top: 20px;
 	right: 20px;
-  }
-  
-  .btn-download {
+}
+
+.btn-download {
 	background-color: #25d366;
 	color: white;
 	border: none;
@@ -29,47 +30,44 @@ body {
 	align-items: center;
 	gap: 8px;
 	transition: background-color 0.3s ease;
-  }
-  
-  .btn-download:hover {
+}
+
+.btn-download:hover {
 	background-color: #1ebe57;
-  }
-  
-  .btn-download i {
-	font-size: 18px;
-  }
-  
-  /* Login Container */
-  .login-container {
+}
+
+/* Login Container */
+.login-container {
 	background-color: #ffffff;
 	padding: 30px;
 	border-radius: 15px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 	text-align: center;
-	width: 100%;
+	width: 90%;
 	max-width: 400px;
-  }
-  
-  .logo i {
+}
+
+.logo i {
 	font-size: 48px;
 	color: #25d366;
 	margin-bottom: 20px;
-  }
-  
-  h2 {
+}
+
+h2 {
 	color: #25d366;
 	margin-bottom: 25px;
 	font-size: 28px;
 	font-weight: bold;
-  }
-  
-  .form-group {
+}
+
+/* Form Group */
+.form-group {
 	position: relative;
 	margin-bottom: 25px;
 	text-align: left;
-  }
-  
-  .floating-label input {
+}
+
+.floating-label input {
 	width: 100%;
 	padding: 12px;
 	border: 1px solid #ccc;
@@ -78,13 +76,13 @@ body {
 	transition: border-color 0.3s ease;
 	background: transparent;
 	outline: none;
-  }
-  
-  .floating-label input:focus {
+}
+
+.floating-label input:focus {
 	border-color: #25d366;
-  }
-  
-  .floating-label label {
+}
+
+.floating-label label {
 	position: absolute;
 	top: 50%;
 	left: 12px;
@@ -95,16 +93,17 @@ body {
 	transition: all 0.3s ease;
 	background: #fff;
 	padding: 0 5px;
-  }
-  
-  .floating-label input:focus + label,
-  .floating-label input:not(:placeholder-shown) + label {
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
 	top: 0;
 	font-size: 12px;
 	color: #25d366;
-  }
-  
-  button {
+}
+
+/* Buttons */
+button {
 	background-color: #25d366;
 	color: white;
 	border: none;
@@ -116,89 +115,61 @@ body {
 	font-size: 18px;
 	font-weight: bold;
 	transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
+}
+
+button:hover {
 	background-color: #1ebe57;
-  }
-  
-  /* Need Help Link */
-  .need-help {
-	margin-top: 15px;
+}
+
+/* Links */
+.need-help,
+.register-link,
+.forgot-password {
 	text-align: center;
-  }
-  
-  .need-help a {
+	margin-top: 15px;
+}
+
+.need-help a,
+.register-link a,
+.forgot-password a {
 	color: #25d366;
 	text-decoration: none;
 	font-weight: bold;
 	font-size: 14px;
-  }
-  
-  .need-help a:hover {
+}
+
+.need-help a:hover,
+.register-link a:hover,
+.forgot-password a:hover {
 	text-decoration: underline;
-  }
-  
-  .register-link {
-	margin-top: 20px;
-	font-size: 16px;
-	color: #555;
-  }
-  
-  .register-link a {
-	color: #25d366;
-	text-decoration: none;
-	font-weight: bold;
-  }
-  
-  .register-link a:hover {
-	text-decoration: underline;
-  }
-  
-  /* Forgot Password Link */
-  .forgot-password {
-	text-align: right;
-	margin-top: 10px;
-	margin-bottom: 20px;
-  }
-  
-  .forgot-password a {
-	color: #25d366;
-	text-decoration: none;
-	font-size: 14px;
-	font-weight: bold;
-  }
-  
-  .forgot-password a:hover {
-	text-decoration: underline;
-  }
-  
-  /* OR Divider */
-  .divider {
+}
+
+/* Divider */
+.divider {
 	display: flex;
 	align-items: center;
 	text-align: center;
 	margin: 20px 0;
 	color: #777;
-  }
-  
-  .divider::before,
-  .divider::after {
+}
+
+.divider::before,
+.divider::after {
 	content: '';
 	flex: 1;
 	border-bottom: 1px solid #ccc;
-  }
-  
-  .divider::before {
+}
+
+.divider::before {
 	margin-right: 10px;
-  }
-  
-  .divider::after {
+}
+
+.divider::after {
 	margin-left: 10px;
-  }
-  
-  /* OTP Button */
-  .btn-otp {
+}
+
+/* OTP Button */
+.btn-otp {
 	background-color: #fff;
 	color: #25d366;
 	border: 2px solid #25d366;
@@ -213,59 +184,12 @@ body {
 	align-items: center;
 	justify-content: center;
 	gap: 8px;
-  }
-  
-  .btn-otp:hover {
+}
+
+.btn-otp:hover {
 	background-color: #25d366;
 	color: #fff;
-  }
-  
-  .btn-otp i {
-	font-size: 18px;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-	.login-container {
-	  width: 90%;
-	  padding: 20px;
-	}
-  
-	h2 {
-	  font-size: 24px;
-	}
-  
-	.floating-label input {
-	  font-size: 14px;
-	}
-  
-	.floating-label label {
-	  font-size: 14px;
-	}
-  
-	button {
-	  font-size: 16px;
-	}
-  
-	.register-link {
-	  font-size: 14px;
-	}
-  
-	.btn-download {
-	  font-size: 14px;
-	  padding: 8px 16px;
-	}
-  
-	.btn-otp {
-	  font-size: 14px;
-	  padding: 10px;
-	}
-  
-	.btn-otp i {
-	  font-size: 16px;
-	}
-  }
-
+}
 
 /* Timer Display */
 .timer {
@@ -274,25 +198,25 @@ body {
 	font-size: 14px;
 	color: #777;
 	display: none; /* Hidden initially */
-  }
-  
-  /* OTP Input Field */
-  .otp-field {
-	margin-top: 20px;
-  }
-  
-  /* Verify OTP Button */
-  #verify-otp-btn {
-	margin-top: 20px;
-  }
+}
 
-  /* Profile Picture Upload */
+/* OTP Input Field */
+.otp-field {
+	margin-top: 20px;
+}
+
+/* Verify OTP Button */
+#verify-otp-btn {
+	margin-top: 20px;
+}
+
+/* Profile Picture Upload */
 .profile-picture {
 	text-align: center;
 	margin-bottom: 25px;
-  }
-  
-  .profile-label {
+}
+
+.profile-label {
 	display: inline-block;
 	background-color: #25d366;
 	color: white;
@@ -301,24 +225,49 @@ body {
 	cursor: pointer;
 	font-size: 16px;
 	transition: background-color 0.3s ease;
-  }
-  
-  .profile-label:hover {
+}
+
+.profile-label:hover {
 	background-color: #1ebe57;
-  }
-  
-  .profile-label i {
-	margin-right: 8px;
-  }
-  
-  .preview {
-	margin-top: 10px;
-  }
-  
-  .preview img {
+}
+
+.preview img {
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
 	object-fit: cover;
 	border: 2px solid #25d366;
-  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.login-container {
+		padding: 20px;
+	}
+
+	h2 {
+		font-size: 24px;
+	}
+
+	.floating-label input {
+		font-size: 14px;
+	}
+
+	.floating-label label {
+		font-size: 14px;
+	}
+
+	button {
+		font-size: 16px;
+	}
+
+	.btn-download {
+		font-size: 14px;
+		padding: 8px 16px;
+	}
+
+	.btn-otp {
+		font-size: 14px;
+		padding: 10px;
+	}
+}
