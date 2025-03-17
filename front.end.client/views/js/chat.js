@@ -38,7 +38,7 @@ let renderChat = async () => {
     let friendChat = [];
     for (let friend of friends) {
       let user_call = await fetch(
-        `${config_variables.API_URL}/chat/history?persons=${userData.data._id},${friend._id}`,
+        `${window.location.origin}/api/chat/history?persons=${userData.data._id},${friend._id}`,
         {
           method: "POST",
           headers: {
@@ -55,7 +55,7 @@ let renderChat = async () => {
   let fetchChatHistory = async (friendId) => {
     try {
       const response = await fetch(
-        `${config_variables.API_URL}/chat/history?persons=${userData.data._id},${friendId}`,
+        `${window.location.origin}/api/chat/history?persons=${userData.data._id},${friendId}`,
         {
           method: "POST",
           headers: {
@@ -694,7 +694,8 @@ let renderChat = async () => {
         this.textContent = "Request Sent";
         this.classList.add("sent");
         this.disabled = true;
-        window.location.href = config_variables.CHAT_URL;
+        window.location.href = '/chat';
+        location.reload();
       });
     });
   }
