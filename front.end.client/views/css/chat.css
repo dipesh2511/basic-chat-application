@@ -75,15 +75,6 @@ body {
   background-color: #f5f5f5;
 }
 
-.dropdown-content .divider {
-  border-top: 1px solid #ccc;
-  margin: 5px 0;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .chat-item {
   display: flex;
   align-items: center;
@@ -97,9 +88,20 @@ body {
 }
 
 .chat-icon {
-  font-size: 24px;
-  color: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
   margin-right: 10px;
+}
+
+.chat-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .chat-info {
@@ -123,26 +125,6 @@ body {
   flex-direction: column;
 }
 
-.chat-header {
-  background-color: #25d366;
-  padding: 15px;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-}
-
-.back-btn {
-  display: none;
-  font-size: 18px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.chat-title {
-  font-size: 18px;
-  font-weight: bold;
-}
-
 .chat-messages {
   flex: 1;
   padding: 15px;
@@ -155,7 +137,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  position: relative;
 }
 
 .message.sent {
@@ -188,32 +169,15 @@ body {
   margin-top: 5px;
 }
 
-.message-options {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
-}
-
-.message:hover .message-options {
-  display: block;
-}
-
-.message-options i {
-  margin: 0 5px;
-  cursor: pointer;
-  color: #777;
-}
-
-.message-options i:hover {
-  color: #25d366;
-}
-
 .chat-input {
   display: flex;
   padding: 10px;
   background-color: #ffffff;
   border-top: 1px solid #ccc;
+  position: fixed;
+  bottom: 0;
+  width: 70%;
+  box-sizing: border-box;
 }
 
 .chat-input input {
@@ -252,10 +216,6 @@ body {
     display: none;
   }
 
-  .back-btn {
-    display: block;
-  }
-
   .chat-section.active {
     display: flex;
   }
@@ -264,28 +224,20 @@ body {
     display: none;
   }
 
-  .dropdown-content {
-    right: 10px;
-    top: 50px;
+  .chat-input {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
   }
 }
 
-#profile-dropdown-content {
-  right: 0;
-  left: auto;
-}
-
-#profile-dropdown-content a {
-  color: #333;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-}
-
-#profile-dropdown-content a:hover {
-  background-color: #f5f5f5;
-}
-/* Add this to your existing CSS */
+/* Profile Modal */
 .profile-modal {
   display: none;
   position: fixed;
@@ -393,16 +345,7 @@ body {
   background-color: #1ebe57;
 }
 
-.profile-actions button#change-photo {
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-.profile-actions button#change-photo:hover {
-  background-color: #e0e0e0;
-}
-
-/* Add this to your existing CSS */
+/* Add Friends Modal */
 .add-friends-modal {
   display: none;
   position: fixed;
@@ -516,43 +459,74 @@ body {
   background-color: #ccc;
   cursor: not-allowed;
 }
-/* Add this to your CSS */
-.profile-actions {
+/* Chat Messages Container */
+.chat-messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; /* Adds spacing between messages */
 }
 
-.profile-actions button {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.profile-actions button:hover {
-  background-color: #0056b3;
-}
-
-#select-photo {
-  display: none; /* Hide the file input */
-}
-/* Add this to your CSS file */
-.chat-icon {
+/* Individual Message Styling */
+.message {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px; /* Adjust as needed */
-  height: 40px; /* Adjust as needed */
-  border-radius: 50%; /* Makes the image circular */
-  overflow: hidden; /* Ensures the image stays within the circle */
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 80%; /* Ensures messages don't take up the full width */
+  word-wrap: break-word; /* Ensures long words break and wrap */
+  overflow-wrap: break-word; /* Alternative for better compatibility */
 }
 
-.chat-icon-img {
-  width: 100%; /* Ensures the image fills the container */
-  height: 100%; /* Ensures the image fills the container */
-  object-fit: cover; /* Ensures the image covers the area without distortion */
+.message.sent {
+  align-items: flex-end; /* Aligns sent messages to the right */
+}
+
+.message .text {
+  background-color: #25d366;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 100%; /* Ensures text doesn't overflow */
+  word-break: break-word; /* Breaks long words to prevent overflow */
+}
+
+.message.sent .text {
+  background-color: #ece5dd;
+  color: #000;
+}
+
+.message .timestamp {
+  font-size: 10px;
+  color: #777;
+  margin-top: 5px;
+}
+
+/* Ensure the chat input doesn't overlap messages */
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #ccc;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000; /* Ensures input stays above messages */
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .message {
+    max-width: 90%; /* Allows more width for messages on smaller screens */
+  }
+
+  .message .text {
+    padding: 8px; /* Slightly smaller padding for mobile */
+    font-size: 14px; /* Adjust font size for better readability */
+  }
+
+  .chat-messages {
+    padding: 10px; /* Reduce padding for more space */
+  }
 }
