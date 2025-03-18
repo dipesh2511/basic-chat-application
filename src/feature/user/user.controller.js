@@ -10,7 +10,7 @@ export default class UserController {
     let { name, email, password } = req.body;
     let profile_photo = null;
     if (req.file) {
-      profile_photo = `http://localhost:3000/${req.file.filename}`;
+      profile_photo = `/${req.file.filename}`;
     }
 
     let new_user = UserModel.create(name, email, password, profile_photo);
