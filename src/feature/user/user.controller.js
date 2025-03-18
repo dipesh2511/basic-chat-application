@@ -48,7 +48,7 @@ export default class UserController {
       let { id } = req.params;
       let updateUserBody = req.body || {};
       if (req.file) {
-        updateUserBody.profile_photo = `http://localhost:3000/${req.file.filename}`;
+        updateUserBody.profile_photo = `/${req.file.filename}`;
       }
       if(updateUserBody.friends){
         updateUserBody.friends = updateUserBody.friends.trim();
